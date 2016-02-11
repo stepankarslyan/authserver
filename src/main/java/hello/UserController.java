@@ -21,7 +21,7 @@ public class UserController {
         return "Greetings from Spring Boot!";
     }
     
-    @RequestMapping(value="/users", consumes = "application/json", method = RequestMethod.POST)
+    @RequestMapping(value="/users", method = RequestMethod.POST)
     @ResponseBody
     public void save(@RequestBody User user) {
     	if(user!=null) {
