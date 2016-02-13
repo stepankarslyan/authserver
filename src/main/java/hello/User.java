@@ -21,7 +21,10 @@ public class User {
 	private String login;
 	
 	@Column(name="password")
-	private String passwrd;
+	private String password;
+	
+	@Column(name="email")
+	private String email;
 	
 	public String getId() {
 		return id;
@@ -35,12 +38,17 @@ public class User {
 	public void setLogin(String login) {
 		this.login = login;
 	}
-	public String getPasswrd() {
-		return passwrd;
+	public String getPassword() {
+		return password;
 	}
-	public void setPasswrd(String passwrd) {
-		this.passwrd = passwrd;
+	public void setPassword(String password) {
+		this.password = password;
 	}
-	
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
 	
 }
