@@ -15,8 +15,8 @@ public class UserController {
 	@Autowired
 	private UserRepository userRepository;
 	
-	@Autowired
-	private RoleRepository roleRepository;
+	//@Autowired
+	//private RoleRepository roleRepository;
 	
 	@RequestMapping(value =  "/" , method = RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody User home() {
