@@ -89,6 +89,6 @@ public class User{
 
 	public void setEnabled(Boolean enabled) {
 		this.enabled = enabled;
-	}	
+	}
 	
 }

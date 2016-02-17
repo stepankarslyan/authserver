@@ -37,8 +37,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		  .httpBasic().and()
 		  .authorizeRequests()
 		    .antMatchers(HttpMethod.POST, "/api/users/**").permitAll()
-		    .antMatchers("/api/home/**").hasRole("USER").and()
-		  .csrf().disable();	
+		    .antMatchers(HttpMethod.GET, "/api/places/**").permitAll()
+		    .antMatchers(HttpMethod.GET, "/logged/**").permitAll()
+		    .antMatchers("/api/login/**").hasRole("USER").and()
+		  .csrf().disable();
+		
+		http
+		.logout()                                                                
+			.logoutUrl("/my/logout")                                                 
+			.logoutSuccessUrl("/api/logged/")                                                                         
+			.invalidateHttpSession(true)                                                                                      
+			.deleteCookies("Cookie").clearAuthentication(true);   
 		
 	}
 	
