@@ -14,7 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
-	/*@Value("${spring.datasource.driverClassName}")
+	@Value("${spring.datasource.driverClassName}")
 	private String className;
 	
 	@Value("${spring.datasource.url}")
@@ -24,15 +24,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	private String dataSourceUsername;
 	
 	@Value("${spring.datasource.password}")
-	private String dataSourcePassword;*/
+	private String dataSourcePassword;
+	
 	
 	@Bean(name = "dataSource")
     public DriverManagerDataSource dataSource() {
     	DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
-    	driverManagerDataSource.setDriverClassName("org.postgresql.Driver");
-    	driverManagerDataSource.setUrl("jdbc:postgresql://localhost:5432/postgres");
-    	driverManagerDataSource.setUsername("postgres");
-    	driverManagerDataSource.setPassword("123");
+    	driverManagerDataSource.setDriverClassName(className);
+    	driverManagerDataSource.setUrl(dataSourceUrl);
+    	driverManagerDataSource.setUsername(dataSourceUsername);
+    	driverManagerDataSource.setPassword(dataSourcePassword);
     		return driverManagerDataSource;
     }
 	
@@ -48,11 +49,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		
 		http
-		  .httpBasic().and()
+		  .httpBasic().and().csrf().disable()
 		  .authorizeRequests()
-		    .antMatchers(HttpMethod.POST, "/api/users/**").permitAll()
-		    .antMatchers("/api/**").hasRole("USER").and()
-		  .csrf().disable();
+		    .antMatchers(HttpMethod.POST, "/api/register/**").permitAll()
+		    //.antMatchers("/api/**").hasRole("USER").and()
+		    .anyRequest().hasRole("USER");
 		
 		http
 		.logout()                                                                

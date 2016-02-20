@@ -31,6 +31,10 @@ public class UserController {
 	@Autowired
 	private GeoServiceImpl geoService;
 	
+
+	@Autowired
+	private UserServiceImple userServiceImpl;
+	
 	@RequestMapping(value =  "/login/" , method = RequestMethod.GET)
 	public @ResponseBody String home() {
 		Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
@@ -94,7 +98,7 @@ public class UserController {
 	
 	@RequestMapping(value =  "/register/" , method = RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE)
 	public void save(@RequestBody User user) {
-		userRepository.save(user);
+		userServiceImpl.registerUser(user);
 	}
 
 }
