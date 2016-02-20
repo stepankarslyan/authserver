@@ -1,6 +1,6 @@
 package hello;
 
-import java.text.DecimalFormat;
+import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -35,10 +35,10 @@ public class UserPlace {
 	private String phote;
 	
 	@Column(name="latitude")
-	private String latitude;
+	private Double latitude;
 	
 	@Column(name="longitude")
-	private String longitude;
+	private Double longitude;
 
 	public String getId() {
 		return id;
@@ -88,19 +88,19 @@ public class UserPlace {
 		this.phote = phote;
 	}
 
-	public String getLatitude() {
+	public Double getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(String latitude) {
+	public void setLatitude(Double latitude) {
 		this.latitude = latitude;
 	}
 
-	public String getLongitude() {
+	public Double getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(String longitude) {
+	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
 	}
 	

@@ -1,5 +1,6 @@
 package hello;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -13,12 +14,25 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
+	/*@Value("${spring.datasource.driverClassName}")
+	private String className;
+	
+	@Value("${spring.datasource.url}")
+	private String dataSourceUrl;
+	
+	@Value("${spring.datasource.username}")
+	private String dataSourceUsername;
+	
+	@Value("${spring.datasource.password}")
+	private String dataSourcePassword;*/
+	
 	@Bean(name = "dataSource")
     public DriverManagerDataSource dataSource() {
     	DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
-    	driverManagerDataSource.setDriverClassName("com.mysql.jdbc.Driver");
-    	driverManagerDataSource.setUrl("jdbc:mysql://localhost:3306/android");
-    	driverManagerDataSource.setUsername("root");
+    	driverManagerDataSource.setDriverClassName("org.postgresql.Driver");
+    	driverManagerDataSource.setUrl("jdbc:postgresql://localhost:5432/postgres");
+    	driverManagerDataSource.setUsername("postgres");
+    	driverManagerDataSource.setPassword("123");
     		return driverManagerDataSource;
     }
 	
@@ -37,14 +51,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		  .httpBasic().and()
 		  .authorizeRequests()
 		    .antMatchers(HttpMethod.POST, "/api/users/**").permitAll()
-		    .antMatchers(HttpMethod.GET, "/api/places/**").permitAll()
-		    .antMatchers(HttpMethod.GET, "/logged/**").permitAll()
-		    .antMatchers("/api/login/**").hasRole("USER").and()
+		    .antMatchers("/api/**").hasRole("USER").and()
 		  .csrf().disable();
 		
 		http
 		.logout()                                                                
-			.logoutUrl("/my/logout")                                                 
+			.logoutUrl("/api/logout")                                                 
 			.logoutSuccessUrl("/api/logged/")                                                                         
 			.invalidateHttpSession(true)                                                                                      
 			.deleteCookies("Cookie").clearAuthentication(true);   

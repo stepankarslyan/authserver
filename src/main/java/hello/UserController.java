@@ -1,24 +1,16 @@
 package hello;
 
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.java_websocket.WebSocket;
-import org.java_websocket.handshake.ClientHandshake;
-import org.java_websocket.server.WebSocketServer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -44,6 +36,7 @@ public class UserController {
 		Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
 		
 		if (authentication != null) {
+			System.out.println("*************************** " + authentication.toString() + " ***************************");
 			User user = userRepository.findOneByUsername(authentication.getName());
 			return user.getId();
 		} else {
@@ -53,42 +46,36 @@ public class UserController {
 	}
 	
 	@RequestMapping(value =  "/places/" , method = RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
-	public List<UserPlace> getPlaces() throws UnknownHostException {
+	public PlaceDetailsResponse getPlaces() throws UnknownHostException {
 		RestTemplate restTemplate = new RestTemplate();
-		String url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=restaurants+in+Armenia&radiud=10000&key=AIzaSyDy3ioBP0XQyWIXGZ3Tp_gJffdK0WcwYAc";
+		String url = "https://maps.googleapis.com/maps/api/place/textsearch/json?radius=30000&types=bar&key=AIzaSyDy3ioBP0XQyWIXGZ3Tp_gJffdK0WcwYAc";
 		restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 		PlaceDetailsResponse response = restTemplate.getForObject(url, PlaceDetailsResponse.class);
-		//geoService.saveUserPlace(response);
+		geoService.saveUserPlace(response);
 		
-		List<UserPlace> places = new ArrayList<UserPlace>();
+		/*List<UserPlace> places = new ArrayList<UserPlace>();
 		for(PlaceDetails placeDetails : response.getResults()) {
 			UserPlace favoritePlace = new UserPlace();
 			List<PlacePhoto> placePhotos = placeDetails.getPhotos();
+			System.out.println(places.toString() + " fdfddfdfddf");
 			PlaceGeometry placeGeometry = placeDetails.getGeometry();
 			
 			favoritePlace.setName(placeDetails.getName());
 			favoritePlace.setAddress(placeDetails.getAddress());
 			favoritePlace.setIcon(placeDetails.getIcon());
 			
-			/*if(!placePhotos.isEmpty()) {
+			if(placePhotos.size() != 0) {
 				for(PlacePhoto placePhoto : placePhotos) {
 					favoritePlace.setPhote(placePhoto.getReference());
 				}
-			}*/
+			}
 			
 			favoritePlace.setLatitude(placeGeometry.getLocation().getLat());
 			favoritePlace.setLongitude(placeGeometry.getLocation().getLng());
 			places.add(favoritePlace);
-		}
+		}*/
 		
-		return places;
-
-	}
-	
-	@RequestMapping(value =  "/jsonplaces/" , method = RequestMethod.GET)
-	public List<UserPlace> getPlacesAsjson() {
-		
-		return userPlaceRepository.findAll();
+		return response;
 
 	}
 	

@@ -30,6 +30,7 @@ public class GeoServiceImpl implements GeoService {
 			}*/
 			
 			favoritePlace.setLatitude(placeGeometry.getLocation().getLat());
+			System.out.println(placeGeometry.getLocation().getLat() + " " + placeGeometry.getLocation().getLng() + " fdsgfdhssfghgfhfgh");
 			favoritePlace.setLongitude(placeGeometry.getLocation().getLng());
 		
 			
