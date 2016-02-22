@@ -2,41 +2,25 @@ package hello;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 @Service
 public class GeoServiceImpl implements GeoService {
-
-	@Autowired
-	private UserPlacesRepository userPlaceRepository;
 	
+	@Value("${google.place.search.url}")
+	private String googleSearchurl;
+
 	@Override
-	public void saveUserPlace(PlaceDetailsResponse placeDetailsResponse) {
+	public List<Place> findPlaces(String search, Long radius, Location location) {
+		RestTemplate restTemplate = new RestTemplate();
+		String url = googleSearchurl + "&query=" + search + "&radius=" + radius + "&location=" + location.getLat() + "," + location.getLng();
+		restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+		PlaceSearchResponse response = restTemplate.getForObject(url, PlaceSearchResponse.class);
 		
-		for(PlaceDetails placeDetails : placeDetailsResponse.getResults()) {
-			UserPlace favoritePlace = new UserPlace();
-			List<PlacePhoto> placePhotos = placeDetails.getPhotos();
-			PlaceGeometry placeGeometry = placeDetails.getGeometry();
-			
-			favoritePlace.setName(placeDetails.getName());
-			favoritePlace.setAddress(placeDetails.getAddress());
-			favoritePlace.setIcon(placeDetails.getIcon());
-			
-			/*if(!placePhotos.isEmpty()) {
-				for(PlacePhoto placePhoto : placePhotos) {
-					favoritePlace.setPhote(placePhoto.getReference());
-				}
-			}*/
-			
-			favoritePlace.setLatitude(placeGeometry.getLocation().getLat());
-			System.out.println(placeGeometry.getLocation().getLat() + " " + placeGeometry.getLocation().getLng() + " fdsgfdhssfghgfhfgh");
-			favoritePlace.setLongitude(placeGeometry.getLocation().getLng());
-		
-			
-			userPlaceRepository.save(favoritePlace);
-		}
-		
+		return response.getResults();
 	}
 
 }

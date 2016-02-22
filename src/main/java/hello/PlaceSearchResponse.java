@@ -5,18 +5,19 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import hello.PlaceDetails;
+import hello.Place;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class PlaceDetailsResponse {
+public class PlaceSearchResponse {
+	
 	@JsonProperty("results")
-	private List<PlaceDetails> results;
+	private List<Place> results;
 
-	public List<PlaceDetails> getResults() {
+	public List<Place> getResults() {
 		return results;
 	}
 
-	public void setResults(List<PlaceDetails> results) {
+	public void setResults(List<Place> results) {
 		this.results = results;
 	}
  

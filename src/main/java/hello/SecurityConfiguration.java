@@ -9,6 +9,8 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.StandardPasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
@@ -41,7 +43,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.
 			jdbcAuthentication().dataSource(dataSource())
-			.usersByUsernameQuery("select user_name,password, enabled from users where user_name=?")
+			.usersByUsernameQuery("select username,password, enabled from users where username=?")
 			.authoritiesByUsernameQuery("select username, role from roles where username=?");
 	}
 	
@@ -62,6 +64,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.invalidateHttpSession(true)                                                                                      
 			.deleteCookies("Cookie").clearAuthentication(true);   
 		
+	}
+	
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+	    return new StandardPasswordEncoder();
 	}
 	
 }

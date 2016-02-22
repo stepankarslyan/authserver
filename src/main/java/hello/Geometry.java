@@ -4,16 +4,16 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class PlaceGeometry {
+public class Geometry {
 	
 	@JsonProperty("location")
-	private PlaceLocation location;
+	private Location location;
  
-	public PlaceLocation getLocation() {
+	public Location getLocation() {
 		return location;
 	}
  
-	public void setLocation(PlaceLocation location) {
+	public void setLocation(Location location) {
 		this.location = location;
 	}
 }

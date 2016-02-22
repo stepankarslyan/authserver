@@ -1,5 +1,7 @@
 package hello;
 
+import java.util.List;
+
 public interface GeoService {
-	public void saveUserPlace(PlaceDetailsResponse placeDetailsResponse);
+	public List<Place> findPlaces(String search, Long radius, Location location);
 }

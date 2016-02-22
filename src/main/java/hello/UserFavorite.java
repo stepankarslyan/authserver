@@ -1,7 +1,5 @@
 package hello;
 
-import java.math.BigDecimal;
-
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -10,8 +8,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 @javax.persistence.Entity
-@Table(name = "user_places")
-public class UserPlace {
+@Table(name = "user_favorites")
+public class UserFavorite {
 	
 	@Id
 	@GeneratedValue(generator = "system-uuid")
@@ -32,7 +30,7 @@ public class UserPlace {
 	private String icon;
 	
 	@Column(name="photo")
-	private String phote;
+	private String photo;
 	
 	@Column(name="latitude")
 	private Double latitude;
@@ -80,12 +78,12 @@ public class UserPlace {
 		this.icon = icon;
 	}
 
-	public String getPhote() {
-		return phote;
+	public String getPhoto() {
+		return photo;
 	}
 
-	public void setPhote(String phote) {
-		this.phote = phote;
+	public void setPhoto(String photo) {
+		this.photo = photo;
 	}
 
 	public Double getLatitude() {
