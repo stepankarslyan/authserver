@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface UserService {
 	public User getLoggedInUser();
-	public void registerUser(User user);
+	public User registerUser(User user);
 	public List<UserFavorite> findUserFavoritePlaces();
 	public void saveUserFavoritePlace(UserFavorite favoritePlace);
 	public UserFavorite findOne(String id);

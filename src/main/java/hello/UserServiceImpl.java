@@ -34,13 +34,13 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public void registerUser(User user) {
+	public User registerUser(User user) {
 		user.setEnabled(true);
 		UserRole role = new UserRole();
 		role.setUsername(user.getUsername());
 		role.setRole("ROLE_USER");
 		roleRepository.save(role);
-		userRepository.save(user);
+		return userRepository.save(user);
 	}
 
 	@Override

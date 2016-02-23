@@ -21,8 +21,8 @@ public class UserController {
 	private UserServiceImpl userServiceImpl;
 	
 	@RequestMapping(value =  "/login/" , method = RequestMethod.GET)
-	public @ResponseBody User login() {
-		return userServiceImpl.getLoggedInUser();
+	public @ResponseBody String login() {
+		return "Welcome";
 	}
 	
 	@RequestMapping(value =  "/logout" , method = RequestMethod.GET)
@@ -39,8 +39,9 @@ public class UserController {
 
 	}
 	
-	@RequestMapping(value =  "/register/" , method = RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE)
-	public void save(@RequestBody User user) {
-		userServiceImpl.registerUser(user);
+	@RequestMapping(value =  "/register/" , method = RequestMethod.POST)
+	public User save(@RequestBody User user) {
+		System.out.println("Server received " + user);
+		return userServiceImpl.registerUser(user);
 	}
 }
