@@ -1,0 +1,16 @@
+postgres:
+ image: postgres
+ mem_limit: 80m
+ volumes:
+  - ./postgresql/data:/var/lib/postgresql/data 
+ environment:
+  - POSTGRES_PASSWORD=root
+ restart: always
+server:
+ build: server
+ mem_limit: 240m
+ links:
+  - postgres
+ ports:
+  - "8080:8080"
+ restart: always
