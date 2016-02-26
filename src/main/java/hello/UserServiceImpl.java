@@ -44,21 +44,21 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<UserFavorite> findUserFavoritePlaces() {
+	public List<Place> findUserFavoritePlaces() {
 		User loggedInUser = this.getLoggedInUser(); 
 		return userfavoriteRepository.findAllByUserId(loggedInUser.getId());
 	}
 
 	@Override
-	public void saveUserFavoritePlace(UserFavorite favoritePlace) {
+	public Place saveUserFavoritePlace(Place favoritePlace) {
 		User loggedInUser = this.getLoggedInUser(); 
 		favoritePlace.setUserId(loggedInUser.getId());
-		userfavoriteRepository.save(favoritePlace);
+		return userfavoriteRepository.save(favoritePlace);
 		
 	}
 
 	@Override
-	public UserFavorite findOne(String id) {
+	public Place findOne(String id) {
 		return userfavoriteRepository.findOne(id);
 	}
 
@@ -74,10 +74,10 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void saveUserInterest(UserInterest interest) {
+	public UserInterest saveUserInterest(UserInterest interest) {
 		User loggedInUser = this.getLoggedInUser();
 		interest.setUserId(loggedInUser.getId());
-		userInterestRepository.save(interest);
+		return userInterestRepository.save(interest);
 	}
 
 	@Override
@@ -91,8 +91,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void updateUserInterest(UserInterest interest, String id) {
+	public UserInterest updateUserInterest(UserInterest interest, String id) {
 		interest.setId(id);
-		userInterestRepository.save(interest);
+		return userInterestRepository.save(interest);
 	}
 }

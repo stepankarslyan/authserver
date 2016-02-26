@@ -25,7 +25,7 @@ public class UserInterest {
 	private String type;
 	
 	@Column(name="radius")
-	private Integer radius;
+	private Long radius;
 
 	public String getId() {
 		return id;
@@ -51,11 +51,11 @@ public class UserInterest {
 		this.type = type;
 	}
 
-	public Integer getRadius() {
+	public Long getRadius() {
 		return radius;
 	}
 
-	public void setRadius(Integer radius) {
+	public void setRadius(Long radius) {
 		this.radius = radius;
 	}
 	

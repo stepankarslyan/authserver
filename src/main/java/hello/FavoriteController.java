@@ -17,18 +17,18 @@ public class FavoriteController {
 	@Autowired
 	private UserServiceImpl userServiceImple;
 	
-	@RequestMapping(value="/favorites/", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE)
-	public void save(@RequestBody UserFavorite favorite) throws Exception {
-		userServiceImple.saveUserFavoritePlace(favorite);	
+	@RequestMapping(value="/favorites/", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	public Place save(@RequestBody Place favorite) throws Exception {
+		return userServiceImple.saveUserFavoritePlace(favorite);	
 	}
 	
 	@RequestMapping(value="/favorites/", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
-	public List<UserFavorite> findAll() throws Exception {
+	public List<Place> findAll() throws Exception {
 		return userServiceImple.findUserFavoritePlaces();	
 	}
 	
 	@RequestMapping(value="/favorites/{id}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
-	public UserFavorite findOne(@PathVariable("id") String id) throws Exception {
+	public Place findOne(@PathVariable("id") String id) throws Exception {
 		return userServiceImple.findOne(id);	
 	}
 	

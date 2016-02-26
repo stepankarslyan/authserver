@@ -1,5 +1,6 @@
 package hello;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -15,12 +16,24 @@ public class GeoServiceImpl implements GeoService {
 
 	@Override
 	public List<Place> findPlaces(String search, Long radius, Location location) {
+		List<Place> foundPlaceses = new ArrayList<Place>();
 		RestTemplate restTemplate = new RestTemplate();
 		String url = googleSearchurl + "&query=" + search + "&radius=" + radius + "&location=" + location.getLat() + "," + location.getLng();
 		restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 		PlaceSearchResponse response = restTemplate.getForObject(url, PlaceSearchResponse.class);
+		for (GooglePlace googlePlace : response.getResults()) {
+			Geometry geometry = googlePlace.getGeometry();
+			Place place = new Place();
+			place.setName(googlePlace.getName());
+			place.setAddress(googlePlace.getAddress());
+			place.setIcon(googlePlace.getIcon());
+			place.setPlaceId(googlePlace.getPlaceId());
+			place.setLatitude(geometry.getLocation().getLat());
+			place.setLongitude(geometry.getLocation().getLng());
+			foundPlaceses.add(place);
+		}
 		
-		return response.getResults();
+		return foundPlaceses;
 	}
 
 }

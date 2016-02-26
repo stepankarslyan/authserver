@@ -5,19 +5,19 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import hello.Place;
+import hello.GooglePlace;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PlaceSearchResponse {
 	
 	@JsonProperty("results")
-	private List<Place> results;
+	private List<GooglePlace> results;
 
-	public List<Place> getResults() {
+	public List<GooglePlace> getResults() {
 		return results;
 	}
 
-	public void setResults(List<Place> results) {
+	public void setResults(List<GooglePlace> results) {
 		this.results = results;
 	}
  

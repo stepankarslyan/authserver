@@ -21,7 +21,7 @@ public class PlaceController {
 	@Autowired
 	private GeoServiceImpl geoServiceImpl;
 	
-	@RequestMapping(value =  "/places" , method = RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value =  "/places/" , method = RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
 	public List<Place> findPlaces(@RequestParam(value="search") String search, 
 			@RequestParam(value="radius") Long radius, 
 			@RequestParam(value="location") Location location) throws UnknownHostException {

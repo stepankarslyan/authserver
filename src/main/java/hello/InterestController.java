@@ -18,11 +18,11 @@ public class InterestController {
 	private UserServiceImpl userServiceImple;
 	
 	@RequestMapping(value="/interests/", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE)
-	public void save(@RequestBody UserInterest interest) throws Exception {
-		userServiceImple.saveUserInterest(interest);	
+	public UserInterest save(@RequestBody UserInterest interest) throws Exception {
+		return userServiceImple.saveUserInterest(interest);
 	}
 	
-	@RequestMapping(value="/interests/", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/interests/", method=RequestMethod.GET)
 	public List<UserInterest> findAll() throws Exception {
 		return userServiceImple.findUserInterests();	
 	}
@@ -32,9 +32,9 @@ public class InterestController {
 		return userServiceImple.findOneUserInterest(id);	
 	}
 	
-	@RequestMapping(value="/interests/{id}", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE )
-	public void update(@RequestBody UserInterest interest, @PathVariable("id") String id) throws Exception {
-		userServiceImple.updateUserInterest(interest, id);	
+	@RequestMapping(value="/interests/{id}", method=RequestMethod.PUT, consumes=MediaType.APPLICATION_JSON_VALUE )
+	public UserInterest update(@RequestBody UserInterest interest, @PathVariable("id") String id) throws Exception {
+		return userServiceImple.updateUserInterest(interest, id);	
 	}
 	
 	@RequestMapping(value="/interests/{id}", method=RequestMethod.DELETE)
