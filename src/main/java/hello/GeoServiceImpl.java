@@ -15,10 +15,10 @@ public class GeoServiceImpl implements GeoService {
 	private String googleSearchurl;
 
 	@Override
-	public List<Place> findPlaces(String search, Long radius, Location location) {
+	public List<Place> findPlaces(String search, Long radius, Double longitude, Double latitude) {
 		List<Place> foundPlaceses = new ArrayList<Place>();
 		RestTemplate restTemplate = new RestTemplate();
-		String url = googleSearchurl + "&query=" + search + "&radius=" + radius + "&location=" + location.getLat() + "," + location.getLng();
+		String url = googleSearchurl + "&query=" + search + "&radius=" + radius + "&location=" + latitude + "," + longitude;
 		restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 		PlaceSearchResponse response = restTemplate.getForObject(url, PlaceSearchResponse.class);
 		for (GooglePlace googlePlace : response.getResults()) {
@@ -27,6 +27,7 @@ public class GeoServiceImpl implements GeoService {
 			place.setName(googlePlace.getName());
 			place.setAddress(googlePlace.getAddress());
 			place.setIcon(googlePlace.getIcon());
+			place.setFavorite(false);
 			place.setPlaceId(googlePlace.getPlaceId());
 			place.setLatitude(geometry.getLocation().getLat());
 			place.setLongitude(geometry.getLocation().getLng());

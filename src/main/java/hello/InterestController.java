@@ -38,8 +38,9 @@ public class InterestController {
 	}
 	
 	@RequestMapping(value="/interests/{id}", method=RequestMethod.DELETE)
-	public void delete(@PathVariable("id") String id) throws Exception {
+	public String delete(@PathVariable("id") String id) throws Exception {
 		userServiceImple.deleteUserInterest(id);	
+		return "Deleted";
 	}
 
 }

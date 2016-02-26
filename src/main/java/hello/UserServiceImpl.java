@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
 	public User getLoggedInUser() {
 		Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
 		if(authentication != null) {
-			return userRepository.findOneByUsername(authentication.getName());
+			return userRepository.findOneByEmail(authentication.getName());
 		} 
 		
 		return null;
@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
 	public User registerUser(User user) {
 		user.setEnabled(true);
 		UserRole role = new UserRole();
-		role.setUsername(user.getUsername());
+		role.setEmail(user.getEmail());
 		role.setRole("ROLE_USER");
 		roleRepository.save(role);
 		return userRepository.save(user);

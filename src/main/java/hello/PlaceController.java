@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,11 +22,17 @@ public class PlaceController {
 	@Autowired
 	private GeoServiceImpl geoServiceImpl;
 	
-	@RequestMapping(value =  "/places" , method = RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
-	public List<Place> findPlaces(@RequestParam(value="search") String search, 
-			@RequestParam(value="radius") Long radius, 
-			@RequestParam(value="location") Location location) throws UnknownHostException {
-		return geoServiceImpl.findPlaces(search, radius, location);
+	@Autowired
+	private UserServiceImpl userServiceImpl;
+	
+	@RequestMapping(value =  "/places/{id}" , method = RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
+	public List<Place> findPlaces(@PathVariable("id") String interestId,  
+			@RequestParam(value="latitude") Double latitude,
+			@RequestParam(value="longitude") Double longitude) throws UnknownHostException {
+		System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5" + longitude + " " + longitude + " " + interestId);
+		UserInterest userInterest = userServiceImpl.findOneUserInterest(interestId);
+		return geoServiceImpl.findPlaces(userInterest.getType(), userInterest.getRadius(), longitude, latitude);
+		
 	}
 	
 }
