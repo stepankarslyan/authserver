@@ -1,2 +1,2 @@
 # authserver
-Spring rest auth server
+Spring rest auth server based on Spring Security
